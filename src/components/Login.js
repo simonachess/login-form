@@ -36,10 +36,11 @@ export default function Login() {
                 body: JSON.stringify(newRecord),
             });
 
-            const fetchData = await res.json();
-            console.log(fetchData)
 
-            // console.log(res);
+            //ask
+            const fetchData = await res.json();
+            const errorMessage = Object.values(fetchData)[0]
+            console.log(errorMessage)
 
             if (res.ok) {
                 setResponse({ data: 'Logged in successfully', type: 'success' });
@@ -47,16 +48,15 @@ export default function Login() {
             }
             if (!res.ok) {
                 setResponse({
-                    data: 'Ups... Something went wrong',
+                    data: `Ups... ${errorMessage}`,
                     type: 'error'
                 });
                 showAlert(true);
             }
 
         } catch (err) {
-            console.log('Error: ' + err);
             setResponse({
-                data: `Ups... Something went wrong CATCH ${err}`,
+                data: `${err}`,
                 type: 'error'
             });
             showAlert(true);
